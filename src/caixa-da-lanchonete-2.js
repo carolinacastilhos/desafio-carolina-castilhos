@@ -4,6 +4,18 @@ const prompt = promptsync({ sigint: true });
 let pedido = [];
 let continuarPedindo = "S";
 
+const valorCafe = 3;
+const valorChantily = 1.5;
+const valorSuco = 6.2;
+const valorSanduiche = 6.5;
+const valorQueijo = 2.0;
+const valorSalgado = 7.25;
+const valorCombo1 = 9.5;
+const valorCombo2 = 7.5;
+
+let valorTotal = 0;
+let valorPedido = 0;
+
 while (continuarPedindo === "S") {
   const pedidoItem = prompt("Qual o código do item? ").toLowerCase();
   if (
@@ -22,11 +34,39 @@ while (continuarPedindo === "S") {
     continuarPedindo === "S";
   } else {
     let pedidoQtd = "0";
-    while (pedidoQtd === "0") {
+    while (pedidoQtd === "0" || pedidoQtd < 0) {
       pedidoQtd = prompt("Qual a quantidade? ");
-      if (pedidoQtd === "0") {
+      if (pedidoQtd === "0" || pedidoQtd < 0) {
         console.log("Quantidade inválida!");
       }
+    }
+
+    // cálculo valor total
+    switch (pedidoItem) {
+      case "cafe":
+        valorPedido += valorCafe * pedidoQtd;
+        break;
+      case "chantily":
+        valorPedido += valorChantily * pedidoQtd;
+        break;
+      case "suco":
+        valorPedido += valorSuco * pedidoQtd;
+        break;
+      case "sanduiche":
+        valorPedido += valorSanduiche * pedidoQtd;
+        break;
+      case "queijo":
+        valorPedido += valorQueijo * pedidoQtd;
+        break;
+      case "salgado":
+        valorPedido += valorSalgado * pedidoQtd;
+        break;
+      case "combo1":
+        valorPedido += valorCombo1 * pedidoQtd;
+        break;
+      case "combo2":
+        valorPedido += valorCombo2 * pedidoQtd;
+        break;
     }
 
     const pedidoFormatado = `${pedidoItem}, ${pedidoQtd}`;
@@ -36,33 +76,24 @@ while (continuarPedindo === "S") {
   }
 }
 
-// prompt("Qual será a forma de pagamento (dinheiro, debito ou credito)? ");
+let formaPagamento = prompt(
+  "Qual será a forma de pagamento (dinheiro, debito ou credito)? "
+);
 
-// let valorTotal = 0;
-// let valorPedido = 0;
-
-// switch (formaPagamento) {
-//   case "dinheiro":
-//     valorTotal = valorPedido - valorPedido * 0.05;
-//     break;
-//   case "debito":
-//     valorTotal = valorPedido;
-//     break;
-//   case "credito":
-//     valorTotal = valorPedido + valorPedido * 0.03;
-//     break;
-//   default:
-//     console.log("Forma de pagamento inválida!");
-//     break;
-// }
-
-console.log(pedido);
-
-// const valorcafe = 3;
-// const valorChantily = 1.5;
-// const valorSuco = 6.2;
-// const valorSanduice = 6.5;
-// const valorQueijo = 2.0;
-// const valorSalgado = 7.25;
-// const valorCombo1 = 9.5;
-// const valorCombo2 = 7.5;
+switch (formaPagamento) {
+  case "dinheiro":
+    valorTotal = valorPedido - valorPedido * 0.05;
+    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    break;
+  case "debito":
+    valorTotal = valorPedido;
+    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    break;
+  case "credito":
+    valorTotal = valorPedido + valorPedido * 0.03;
+    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    break;
+  default:
+    console.log("Forma de pagamento inválida!");
+    break;
+}
