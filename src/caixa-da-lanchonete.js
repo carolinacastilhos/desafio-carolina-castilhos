@@ -34,7 +34,7 @@ class CaixaDaLanchonete {
         (item.trim() === "queijo" &&
           !this.validarItemPrincipalNoPedido("sanduiche", itens))
       ) {
-        throw new Error("Item extra não pode ser pedido sem o principal.");
+        throw new Error("Item extra não pode ser pedido sem o principal");
       } else if (quantidade === "0" || quantidade < 0) {
         throw new Error("Quantidade inválida!");
       }
@@ -101,27 +101,23 @@ class CaixaDaLanchonete {
       switch (metodoDePagamento) {
         case "dinheiro":
           const valorTotalDinheiro = valorPedido - valorPedido * 0.05;
-          console.log(`R$ ${valorTotalDinheiro.toFixed(2).replace(".", ",")}`);
-          break;
+          return `R$ ${valorTotalDinheiro.toFixed(2).replace(".", ",")}`;
         case "debito":
           const valorTotalDebito = valorPedido;
-          console.log(`R$ ${valorTotalDebito.toFixed(2).replace(".", ",")}`);
-          break;
+          return `R$ ${valorTotalDebito.toFixed(2).replace(".", ",")}`;
         case "credito":
           const valorTotalCredito = valorPedido + valorPedido * 0.03;
-          console.log(`R$ ${valorTotalCredito.toFixed(2).replace(".", ",")}`);
-          break;
+          return `R$ ${valorTotalCredito.toFixed(2).replace(".", ",")}`;
         default:
-          console.log("Forma de pagamento inválida!");
-          break;
+          return "Forma de pagamento inválida!";
       }
     } catch (error) {
-      console.log(error.message);
+      return error.message;
     }
   }
 }
 
-// new CaixaDaLanchonete().calcularValorDaCompra("debito", ["chantily,1"]);
+// new CaixaDaLanchonete().calcularValorDaCompra("dinheiro", ["chantily,1"]);
 
 // new CaixaDaLanchonete().calcularValorDaCompra("debito", [
 //   "cafe,1",
