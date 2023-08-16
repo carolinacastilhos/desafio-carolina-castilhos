@@ -1,6 +1,16 @@
 import promptsync from "prompt-sync";
 const prompt = promptsync({ sigint: true });
 
+function itemPrincipalNoPedido(itemPrincipal) {
+  for (const itemQuantidade of pedido) {
+    const [item] = itemQuantidade.split(",");
+    if (item.trim() === itemPrincipal) {
+      return true;
+    }
+  }
+  return false;
+}
+
 let pedido = [];
 let continuarPedindo = "S";
 
@@ -16,6 +26,7 @@ const valorCombo2 = 7.5;
 let valorTotal = 0;
 let valorPedido = 0;
 
+// realizar pedido dos itens
 while (continuarPedindo === "S") {
   const pedidoItem = prompt("Qual o código do item? ").toLowerCase();
   if (
@@ -29,9 +40,11 @@ while (continuarPedindo === "S") {
     pedidoItem != "combo2"
   ) {
     console.log("Item inválido!");
-  } else if (pedidoItem === "") {
-    console.log("Não há itens no carrinho de compra!");
-    continuarPedindo === "S";
+  } else if (
+    (pedidoItem === "chantily" && !itemPrincipalNoPedido("cafe")) ||
+    (pedidoItem === "queijo" && !itemPrincipalNoPedido("sanduiche"))
+  ) {
+    console.log("Item extra não pode ser pedido sem o principal.");
   } else {
     let pedidoQtd = "0";
     while (pedidoQtd === "0" || pedidoQtd < 0) {
@@ -41,7 +54,7 @@ while (continuarPedindo === "S") {
       }
     }
 
-    // cálculo valor total
+    // cálculo valor pedido
     switch (pedidoItem) {
       case "cafe":
         valorPedido += valorCafe * pedidoQtd;
@@ -72,10 +85,15 @@ while (continuarPedindo === "S") {
     const pedidoFormatado = `${pedidoItem}, ${pedidoQtd}`;
     pedido.push(pedidoFormatado);
 
+    if (pedido.length === 0) {
+      console.log("Não há itens no carrinho de compra!");
+    }
+
     continuarPedindo = prompt("Continuar pedindo (S/N)? ").toUpperCase();
   }
 }
 
+// cálculo do valorTotal conforme forma de pagamento
 let formaPagamento = prompt(
   "Qual será a forma de pagamento (dinheiro, debito ou credito)? "
 );
@@ -83,15 +101,15 @@ let formaPagamento = prompt(
 switch (formaPagamento) {
   case "dinheiro":
     valorTotal = valorPedido - valorPedido * 0.05;
-    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    console.log(`R$ ${valorTotal.toFixed(2).replace(".", ",")}`);
     break;
   case "debito":
     valorTotal = valorPedido;
-    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    console.log(`R$ ${valorTotal.toFixed(2).replace(".", ",")}`);
     break;
   case "credito":
     valorTotal = valorPedido + valorPedido * 0.03;
-    console.log(`R$ ${valorTotal.toFixed(2)}`);
+    console.log(`R$ ${valorTotal.toFixed(2).replace(".", ",")}`);
     break;
   default:
     console.log("Forma de pagamento inválida!");
