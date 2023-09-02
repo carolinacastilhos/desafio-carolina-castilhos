@@ -1,7 +1,6 @@
 # CAIXA DA LANCHONETE
 
-Olá! Você foi contratado para automatizar o caixa da Lanchonete da DB.
-Sua missão será construir a lógica que calcula o valor de uma compra de acordo com o cardápio, regras e descontos da Lanchonete.
+Olá! Você foi contratado para automatizar o caixa da Lanchonete. Sua missão será construir a lógica que calcula o valor de uma compra de acordo com o cardápio, regras e descontos da Lanchonete.
 
 ### CARDÁPIO
 
